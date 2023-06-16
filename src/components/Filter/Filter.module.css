@@ -1,4 +1,8 @@
+.container{
+    margin: 0 400px;
+}
 .input{
+    margin: 0 auto;
     outline: none;
     border: 1px solid rgba(243, 118, 35, 0.932);
     border-radius: 15px;

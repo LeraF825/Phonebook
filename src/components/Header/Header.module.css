@@ -1,0 +1,49 @@
+.header{
+    top: 0;
+    left: 0;
+    position: sticky;
+    z-index: 1100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 64px;
+    padding-right: 24px;
+    padding-left: 24px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    color: #fff;
+    background-color: #fa9256;
+    box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
+      0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+}
+.title{
+    color:rgb(6, 6, 145);
+    margin: 0 auto;
+   
+}
+.partTitle{
+    color:rgb(240, 202, 146);
+}
+.home{
+    display: flex;
+    font-size: large;
+    
+}
+.logoutBtn{
+    background-color: #0e35e0;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+.logoutBtn:hover {
+    box-shadow:  0 0 5px rgb(0, 81, 255), 0 0 15px rgba(0, 60, 255, 0.918),
+0 0 20px rgb(0, 38, 255), 0 0 40px rgb(108, 140, 245);
+}
+.autho{
+    display: flex;
+    
+}
+.registr{
+    margin-right: 30px;
+}

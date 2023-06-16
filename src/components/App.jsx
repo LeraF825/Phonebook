@@ -1,35 +1,41 @@
-import { nanoid } from 'nanoid';
-import { ContactForm } from './ContactForm/ContactForm';
-import { ContactList } from './ContactList/ContactList';
-import { Filter } from './Filter/Filter';
-import s from './App.module.css';
+import { Header } from './Header/Header';
+import { UserForm } from './UserForm/UserForm';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContactsAction } from 'redux/contactsSlice';
-import { getContacts } from 'redux/contactsSelector';
-import { FcTwoSmartphones } from 'react-icons/fc';
+import { useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import AuthPage from './pages/AuthPage';
+import LoginPage from './pages/LoginPage';
+import { getRefreshUser } from 'redux/contacts/contactsThunk';
+import s from './App.module.css';
+import {CgHello} from  'react-icons/cg'
+
 
 export const App = ()=>{
+  const { isAuth } = useSelector(state => state.auth);
   const dispatch = useDispatch();
-  const contacts = useSelector(getContacts);
-
-  const handleSubmit = ({ number, name }) => {
-    const contact = {
-      name,
-      number,
-      id: nanoid(),
-    };
-    dispatch(addContactsAction(contact));
-  };
+  useEffect(() => {
+    dispatch(getRefreshUser());
+  }, [dispatch]);
 
   return (
-    <div className={s.containerForm}>
-        <h1 className={s.title}>Phone
-          <span className={s.partTitle}>book</span>
-          <FcTwoSmartphones /></h1>
-        <ContactForm  handleSubmit={handleSubmit} contacts={contacts}/>
-        <h2 className={s.title}>Contacts</h2>
-          <Filter  />
-          <ContactList />
-      </div>
-  )
+    <>
+      <Header />
+      <Routes>
+        <Route path="/register" element={<AuthPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route
+          path="/"
+          element={
+            isAuth ? (
+              <UserForm />
+            ) : (
+              <p className={s.welcome}>
+                Wellcome <CgHello size="1.5rem" color="orange"/>
+              </p>
+            )
+          }
+        />
+      </Routes>
+    </>
+  );
 }

@@ -1,18 +1,24 @@
 import s from './ContactList.module.css';
 import { useSelector , useDispatch} from 'react-redux';
-import { getContacts } from 'redux/contactsSelector';
-import { deleteContactsAction } from 'redux/contactsSlice';
+import { deleteContactOperation } from 'redux/contacts/contactsThunk'; 
 
 
-export const ContactList = ({ title }) => {
+export const ContactList = () => {
+  const { contacts, filter} = useSelector(state => state.contacts);
   const dispatch = useDispatch();
-  const contacts = useSelector(getContacts);
+
+  const deleteContact = contactId => {
+    dispatch(deleteContactOperation(contactId));
+  };
+
+  const filteredContacts = contacts.filter(el =>
+    el.name.toLowerCase().includes(filter.toLowerCase())
+  );
+  
   return (
     <>
-      <h2 className={s.title}>{title}</h2>
       <ul className={s.contactList}>
-        {contacts && contacts.length > 0 ? (
-          contacts.map(contact => (
+        {filteredContacts.map(contact => (
             <li key={contact.id} className={s.contactItem}>
               <p>
                 <span>{contact.name}:</span>
@@ -20,16 +26,13 @@ export const ContactList = ({ title }) => {
               </p>
               <button
                 type="button"
-                onClick={() => dispatch(deleteContactsAction(contact.id))}
+                onClick={e => deleteContact(contact.id)}
                 className={s.BtnDelete}
               >
                 Delete
               </button>
             </li>
-          ))
-        ) : (
-          <p className={s.no_contacts}>There are no contacts here</p>
-        )}
+          ))} 
       </ul>
     </>
   );

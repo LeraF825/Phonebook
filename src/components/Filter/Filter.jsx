@@ -1,15 +1,16 @@
 import s from './Filter.module.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { getFiltered } from 'redux/contactsSelector';
-import { filterContactsAction } from 'redux/contactsSlice';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { filterContactAction } from 'redux/contacts/contactsSlice';
 
 
 export  const Filter = () => {
+  const [filter, setFilter] = useState('');
   const dispatch = useDispatch();
-  const filtered = useSelector(getFiltered);
-  const handleFilter = ev => {
-    const { value } = ev.target;
-    dispatch(filterContactsAction(value.trim()));
+
+  const filterContacts = ({ target: { value } }) => {
+    setFilter(value);
+    dispatch(filterContactAction(value));
   };
 
     return (
@@ -18,8 +19,8 @@ export  const Filter = () => {
         <input className={s.input}
           type="text"
           name="filter"
-          value={filtered}
-          onChange={e=>{handleFilter(e)}}
+          value={filter}
+          onChange={filterContacts}
         />
       </div>
     );
